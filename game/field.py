@@ -7,6 +7,8 @@ class Field:
         self.size = size
         self.create()
         self.visited_cells = []
+        self.ai_win = False
+        self.player_win = False
 
     def get_coordinates(self, x_coord, y_coord):
         return [[x_coord, y_coord], [x_coord + 20, y_coord + 10], [x_coord + 20, y_coord + 30],
@@ -41,4 +43,15 @@ class Field:
         return False
 
     def fill_cell_by_index(self, index, color):
-        self.fill_cell((self.cells[index].coordinates[0][0] + 1, self.cells[index].coordinates[0][1] - 1), color)
+        self.cells[index].fill(color)
+        self.visited_cells.append(self.cells[index])
+
+    # def check_win(self):
+    #     if len(self.visited_cells) >= self.field.size:
+    #         for cell1 in self.players[self.next_move].end_cells[0]:
+    #             for cell2 in self.players[self.next_move].end_cells[1]:
+    #                 if self.field.cells[cell1] in self.players[self.next_move].visited_cells and \
+    #                         self.field.cells[cell2] in self.players[self.next_move].visited_cells:
+    #                     if self.get_way(cell1, cell2, 0, []):
+    #                         self.game_display = pygame.display.set_mode((1100, 650))
+    #                         self.flag_win = True

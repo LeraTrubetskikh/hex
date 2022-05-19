@@ -11,7 +11,7 @@ def start():
     pygame.init()
     game_display = pygame.display.set_mode((1100, 650))
     field = Field(11)
-    ai = AI()
+    ai = AI(11)
     ai_move = False
     gui = QUI(game_display)
 
@@ -28,6 +28,7 @@ def start():
         game_display.fill((30, 30, 30))
         gui.update(field)
         if ai_move:
+            pygame.display.update()
             ai.move(field)
             ai_move = False
             gui.update(field)

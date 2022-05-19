@@ -8,6 +8,7 @@ BLACK = (0, 0, 0)
 class QUI:
     def __init__(self, game_display):
         self.game_display = game_display
+        self.font = pygame.font.SysFont('arial', 36)
 
     def get_coordinates_for_frame(self, cell, indices, shifts):
         return [[cell.coordinates[indices[0]][indices[1]],
@@ -37,6 +38,16 @@ class QUI:
                     pygame.draw.polygon(self.game_display, BLUE, cell.coordinates)
             pygame.draw.polygon(self.game_display, WHITE, cell.coordinates, 2)
 
+    def print_message(self, message: str, pos):
+        surf = self.font.render(message, False, WHITE)
+        rect = surf.get_rect(center=pos)
+        self.game_display.blit(surf, rect)
+
     def update(self, field):
-        self.draw_frame(field)
-        self.draw_field(field)
+        if field.player_win:
+            self.print_message('You win', (550, 300))
+        elif field.ai_win:
+            self.print_message('You lose', (550, 300))
+        else:
+            self.draw_frame(field)
+            self.draw_field(field)
