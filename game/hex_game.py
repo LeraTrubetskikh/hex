@@ -8,19 +8,18 @@ from game.gui import QUI
 
 
 def start():
+    """updates game's state and draws it on the screen"""
     pygame.init()
     game_display = pygame.display.set_mode((1100, 650))
     field = Field(11)
-    ai = AI(11)
+    ai = AI(11, 'config11x11.txt')
     ai_move = False
     gui = QUI(game_display)
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
             pos = pygame.mouse.get_pos()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if field.fill_cell(pos, 'red'):
@@ -28,10 +27,10 @@ def start():
         game_display.fill((30, 30, 30))
         gui.update(field)
         if ai_move:
-            pygame.display.update()
             ai.move(field)
-            ai_move = False
             gui.update(field)
+            pygame.display.update()
+            ai_move = False
         pygame.display.flip()
         pygame.time.delay(20)
         pygame.display.update()
@@ -39,7 +38,3 @@ def start():
 
 if __name__ == "__main__":
     start()
-
-
-
-
